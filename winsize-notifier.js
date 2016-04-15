@@ -1,42 +1,86 @@
-// Globals
-var winsizeNotifier = null;
+'use strict';
 
-window.onload = init;
+!function() {
+  class WinsizeNotifier {
 
-function init() {
-  winsizeNotifier = document.createElement('span');
-  winsizeNotifier.setAttribute('id', 'winsize-notifier');
-  winsizeNotifier.style.position = 'fixed';
-  winsizeNotifier.style.bottom = '0';
-  winsizeNotifier.style.right = '0';
-  winsizeNotifier.style.zIndex = '999999';
-  winsizeNotifier.style.padding = '8px';
-  winsizeNotifier.style.backgroundColor = '#000000';
-  winsizeNotifier.style.color = '#FFFFFF';
+    constructor() {
+      var oldEl = document.getElementById(this._getID()); // Old element
 
-  updateDimension();
+      if(oldEl == null) {
+        this._el = document.createElement('span');
+        this._setId();
+      } else {
+        this._el = oldEl;
+      }
 
-  document.body.appendChild(winsizeNotifier);
-}
+      this._init(); // Initialize component
+    }
 
-function getWinWidth() {
-  return window.innerWidth;
-}
+    /**
+     * Component initialization
+     *
+     */
+    _init() {
+      // Default styles
+      this._el.style.position = 'fixed';
+      this._el.style.bottom = '0';
+      this._el.style.right = '0';
+      this._el.style.zIndex = '999999';
+      this._el.style.padding = '8px';
+      this._el.style.backgroundColor = '#000000';
+      this._el.style.color = '#FFFFFF';
 
-function getWinHeight() {
-  return window.innerHeight;
-}
+      this._updateDimension(); // Calculate the dimension
+      this._events(); // Events
 
-function getDimension() {
-  return getWinWidth() + ' x ' + getWinHeight() + 'pixels';
-}
+      this._addEl(); // Append element
+    }
 
-function updateDimension() {
-  winsizeNotifier.innerHTML = getDimension();
-}
+    /**
+     * The ID string of the element
+     *
+     * @return String. The ID of the element
+     *
+     */
+    _getID() {
+      return 'winsize-notifier';
+    }
 
-window.onresize = resize;
+    /**
+     * Set the ID attribute of the element
+     *
+     */
+    _setId() {
+      this._el.setAttribute('id', this._getID());
+    }
 
-function resize() {
-  updateDimension();
-}
+    /**
+     * Determine the dimension of the browser window
+     *
+     */
+    _updateDimension() {
+      this._el.innerHTML = window.innerWidth + ' x ' + window.innerHeight + ' pixels';
+    }
+
+    /**
+     * Append the element to the body
+     *
+     */
+    _addEl() {
+      document.body.appendChild(this._el);
+    }
+
+    /**
+     * Event listeners
+     *
+     */
+    _events() {
+      var that = this;
+      window.addEventListener('resize', function() {
+        that._updateDimension(); 
+      })
+    }
+  }
+
+  new WinsizeNotifier();
+}();
