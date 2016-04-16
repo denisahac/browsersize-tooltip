@@ -13,26 +13,6 @@ module.exports = function(grunt) {
   grunt.initConfig({
       pkg: grunt.file.readJSON('package.json'),
       
-      // Javascript linter
-      // https://www.npmjs.com/package/grunt-contrib-jshint
-      jshint: {
-          // Grunt
-          grunt: {
-              files: {
-                  src: ['Gruntfile.js']
-              }
-          },
-          // Library scripts
-          scripts: {
-              options: {
-                ignores: ['*.min.js']
-              },
-              files: {
-                  src: ['*.js']
-              }
-          }
-      },
-      
       // ES6 transpilier
       // https://github.com/babel/grunt-babel
       babel: {
@@ -42,7 +22,7 @@ module.exports = function(grunt) {
 
         dist: {
           files: {
-            'dist/winsize-notifier.js': 'winsize-notifier.js'
+            'dist/browsersize-tooltip.js': 'browsersize-tooltip.js'
           }
         }
       },
@@ -55,41 +35,15 @@ module.exports = function(grunt) {
             sourceMap: true
           },
           files: {
-            'dist/winsize-notifier.min.js': ['dist/winsize-notifier.js']
+            'dist/browsersize-tooltip.min.js': ['dist/browsersize-tooltip.js']
           }
         }
-      },
-
-      // File watcher
-      // https://www.npmjs.com/package/grunt-contrib-watch
-      watch: {
-        // Grunt
-        grunt: {
-            options: {
-                reload: true
-            },
-            files: ['Gruntfile.js'],
-            tasks: ['jshint:grunt']
-        },
-
-        // Scripts
-        scripts: {
-            files: ['*.js'],
-            tasks: ['jshint:scripts']
-        }
       }
+
   });
   
   // Load plugin(s)
-  grunt.loadNpmTasks('grunt-contrib-jshint');           // Javascript linter
   grunt.loadNpmTasks('grunt-contrib-uglify');           // Javascript minifier
-  grunt.loadNpmTasks('grunt-contrib-watch');            // File watcher
-  
-  // Register task(s)
-  grunt.registerTask('build', [
-      'jshint',
-      'watch'
-  ]);                                                   // Run this task with 'grunt build' command
   
   grunt.registerTask('deploy', [
       'babel',
@@ -97,5 +51,5 @@ module.exports = function(grunt) {
   ]);                                                   // Run this task on deployment with 'grunt deploy' command
   
   
-  grunt.registerTask('default', 'build');               // Default task 
+  grunt.registerTask('default', '[deploy]');               // Default task 
 };
