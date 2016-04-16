@@ -7,6 +7,8 @@
  */
 
 module.exports = function(grunt) {
+  require('load-grunt-tasks')(grunt);
+
   // Initialize configuration
   grunt.initConfig({
       pkg: grunt.file.readJSON('package.json'),
@@ -31,6 +33,19 @@ module.exports = function(grunt) {
           }
       },
       
+      // ES6 transpilier
+      // https://github.com/babel/grunt-babel
+      babel: {
+        options: {
+          presets: ['es2015']
+        },
+
+        dist: {
+          files: {
+            'dist/winsize-notifier.js': 'winsize-notifier.js'
+          }
+        }
+      },
 
       // Javascript minifier
       // https://www.npmjs.com/package/grunt-contrib-uglify
@@ -40,7 +55,7 @@ module.exports = function(grunt) {
             sourceMap: true
           },
           files: {
-            'winsize-notifier.min.js': ['winsize-notifier.js']
+            'dist/winsize-notifier.min.js': ['dist/winsize-notifier.js']
           }
         }
       },
@@ -77,7 +92,7 @@ module.exports = function(grunt) {
   ]);                                                   // Run this task with 'grunt build' command
   
   grunt.registerTask('deploy', [
-      'jshint',
+      'babel',
       'uglify'
   ]);                                                   // Run this task on deployment with 'grunt deploy' command
   
