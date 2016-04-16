@@ -1,6 +1,6 @@
 {
   "name": "browsersize-tooltip",
-  "version": "1.0.0",
+  "version": "v1.0.0",
   "description": "Browser window width and height tooltip",
   "main": "Gruntfile.js",
   "scripts": {
