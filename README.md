@@ -16,7 +16,7 @@ $ bower install --save-dev browsersize-tooltip
 ## Usage
 
 ```html
-<script type="text/javascript" src="dist/browsersize-tooltip.min.js"></script>
+<script type="text/javascript" src="bower_components/browsersize-tooltip/dist/browsersize-tooltip.min.js"></script>
 ```
 
 ## Notes
