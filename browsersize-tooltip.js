@@ -57,7 +57,7 @@
 
         if(oldStyle == null) oldStyle = '';
 
-        var newStyle = oldStyle + this._dashed(key) + ':' + styles[key] + ';';
+        var newStyle = oldStyle + this._dashed(key) + ':' + styles[key] + ';'; 
         this._el.setAttribute('style', newStyle);
       }
     }
