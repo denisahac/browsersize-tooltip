@@ -51,5 +51,5 @@ module.exports = function(grunt) {
   ]);                                                   // Run this task on deployment with 'grunt deploy' command
 
 
-  grunt.registerTask('default', '[build]');               // Default task
+  grunt.registerTask('default', 'build');               // Default task
 };

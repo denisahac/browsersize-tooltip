@@ -30,14 +30,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     _createClass(BrowserSizeTooltip, [{
       key: '_init',
       value: function _init() {
-        // Default styles
-        this._el.style.position = 'fixed';
-        this._el.style.bottom = '0';
-        this._el.style.right = '0';
-        this._el.style.zIndex = '999999';
-        this._el.style.padding = '8px';
-        this._el.style.backgroundColor = '#000000';
-        this._el.style.color = '#FFFFFF';
+        this._applyStyles({
+          'position': 'fixed',
+          'bottom': 0,
+          'right': 0,
+          'zIndex': 9999999,
+          'padding': '8px',
+          'backgroundColor': '#000000',
+          'color': '#FFFFFF'
+        });
 
         this._updateDimension(); // Calculate the dimension
         this._events(); // Events
@@ -46,10 +47,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }
 
       /**
-       * The ID string of the element
+       * The ID string of the element.
        *
-       * @return String. The ID of the element
-       *
+       * @return {String] - The ID of the element.
        */
 
     }, {
@@ -59,8 +59,53 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }
 
       /**
-       * Set the ID attribute of the element
+       * Apply element styles.
        *
+       * @param {Array} styles [] - The CSS to apply, supplied in JSON format.
+       */
+
+    }, {
+      key: '_applyStyles',
+      value: function _applyStyles() {
+        var styles = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+        for (var key in styles) {
+          var oldStyle = this._el.getAttribute('style');
+
+          if (oldStyle == null) oldStyle = '';
+
+          var newStyle = oldStyle + this._dashed(key) + ':' + styles[key] + ';';
+          this._el.setAttribute('style', newStyle);
+        }
+      }
+
+      /**
+       * Convert camel-case string to kebab-case.
+       *
+       * @param {String} property - The string to convert.
+       */
+
+    }, {
+      key: '_dashed',
+      value: function _dashed(property) {
+        var newProperty = '';
+
+        for (var i = 0; i < property.length; i++) {
+          var char = property.charAt(i);
+          if (char >= 'A' && char <= 'Z') {
+            // character is uppercase
+            if (property.indexOf(char) > 0) {
+              newProperty += '-';
+            }
+          }
+          newProperty += char;
+        }
+
+        return newProperty.toLowerCase();
+      }
+
+      /**
+       * Set the ID attribute of the element.
        */
 
     }, {
@@ -70,8 +115,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }
 
       /**
-       * Determine the dimension of the browser window
-       *
+       * Determine the dimension of the browser window.
        */
 
     }, {
@@ -81,8 +125,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }
 
       /**
-       * Append the element to the body
-       *
+       * Append the element to the body.
        */
 
     }, {
@@ -92,8 +135,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }
 
       /**
-       * Event listeners
-       *
+       * Event listeners.
+       * Specifically listening to the resize event of the window.
        */
 
     }, {
