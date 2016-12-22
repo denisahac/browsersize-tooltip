@@ -12,7 +12,7 @@ module.exports = function(grunt) {
   // Initialize configuration
   grunt.initConfig({
       pkg: grunt.file.readJSON('package.json'),
-      
+
       // ES6 transpilier
       // https://github.com/babel/grunt-babel
       babel: {
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
       uglify: {
         scripts: {
           options: {
-            sourceMap: true
+            sourceMap: false
           },
           files: {
             'dist/browsersize-tooltip.min.js': ['dist/browsersize-tooltip.js']
@@ -41,15 +41,15 @@ module.exports = function(grunt) {
       }
 
   });
-  
+
   // Load plugin(s)
   grunt.loadNpmTasks('grunt-contrib-uglify');           // Javascript minifier
-  
-  grunt.registerTask('deploy', [
+
+  grunt.registerTask('build', [
       'babel',
       'uglify'
   ]);                                                   // Run this task on deployment with 'grunt deploy' command
-  
-  
-  grunt.registerTask('default', '[deploy]');               // Default task 
+
+
+  grunt.registerTask('default', '[build]');               // Default task
 };
