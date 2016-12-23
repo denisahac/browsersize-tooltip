@@ -24,7 +24,7 @@
     "tests",
     "bower.json",
     "Gruntfile.js",
-    "index.html"
+    "index.html",
     "package.json"
   ]
 }
