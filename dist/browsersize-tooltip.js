@@ -69,18 +69,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       value: function _applyStyles() {
         var styles = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 
-        for (var key in styles) {
-          var oldStyle = this._el.getAttribute('style');
+        var newStyle = this._el.getAttribute('style');
 
-          if (oldStyle == null) oldStyle = '';
-
-          var newStyle = oldStyle + this._dashed(key) + ':' + styles[key] + ';';
-          this._el.setAttribute('style', newStyle);
+        if (newStyle == null) {
+          newStyle = '';
         }
+
+        for (var key in styles) {
+          newStyle += this._dashed(key) + ':' + styles[key] + ';';
+        }
+
+        this._el.setAttribute('style', newStyle);
       }
 
       /**
-       * Convert camel-case string to kebab-case.
+       * Convert camelCase string to kebab-case.
        *
        * @param {String} property - The string to convert.
        */
@@ -92,7 +95,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         for (var i = 0; i < property.length; i++) {
           var char = property.charAt(i);
-          if (char >= 'A' && char <= 'Z') {
+          if (char === char.toUpperCase()) {
             // character is uppercase
             if (property.indexOf(char) > 0) {
               newProperty += '-';

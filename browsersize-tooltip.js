@@ -52,18 +52,21 @@
      * @param {Array} styles [] - The CSS to apply, supplied in JSON format.
      */
     _applyStyles(styles = []) {
-      for(var key in styles) {
-        var oldStyle = this._el.getAttribute('style');
+      var newStyle = this._el.getAttribute('style');
 
-        if(oldStyle == null) oldStyle = '';
-
-        var newStyle = oldStyle + this._dashed(key) + ':' + styles[key] + ';'; 
-        this._el.setAttribute('style', newStyle);
+      if(newStyle == null) {
+        newStyle = '';
       }
+
+      for(var key in styles) {
+        newStyle += this._dashed(key) + ':' + styles[key] + ';';
+      }
+
+      this._el.setAttribute('style', newStyle);
     }
 
     /**
-     * Convert camel-case string to kebab-case.
+     * Convert camelCase string to kebab-case.
      *
      * @param {String} property - The string to convert.
      */
@@ -72,7 +75,7 @@
 
       for(var i = 0; i < property.length; i++) {
         var char = property.charAt(i);
-        if(char >= 'A' && char <= 'Z') { // character is uppercase
+        if(char === char.toUpperCase()) { // character is uppercase
           if(property.indexOf(char) > 0) {
             newProperty += '-';
           }
