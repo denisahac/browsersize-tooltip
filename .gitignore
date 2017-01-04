@@ -3,3 +3,6 @@ node_modules/
 
 # Bower
 bower_components/
+
+# Visual Studio Code
+.vscode
